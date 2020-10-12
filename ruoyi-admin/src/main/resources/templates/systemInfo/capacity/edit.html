@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改主机容量')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-capacity-edit" th:object="${vgHostCapacity}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">主机组：</label>
+                <div class="col-sm-8">
+                    <input name="groupName" th:field="*{groupName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">Ip地址：</label>
+                <div class="col-sm-8">
+                    <input name="ip" th:field="*{ip}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">HostName：</label>
+                <div class="col-sm-8">
+                    <input name="hostName" th:field="*{hostName}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">CPU核心数：</label>
+                <div class="col-sm-8">
+                    <input name="cpuNums" th:field="*{cpuNums}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">cpu利用率：</label>
+                <div class="col-sm-8">
+                    <input name="cpuUtil" th:field="*{cpuUtil}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">内存容量：</label>
+                <div class="col-sm-8">
+                    <input name="memTotal" th:field="*{memTotal}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">内存使用率：</label>
+                <div class="col-sm-8">
+                    <input name="memUtil" th:field="*{memUtil}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "systemInfo/capacity";
+        $("#form-capacity-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-capacity-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

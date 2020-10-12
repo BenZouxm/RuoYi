@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.VgHostCapacityMapper">
+    
+    <resultMap type="VgHostCapacity" id="VgHostCapacityResult">
+        <result property="groupName"    column="group_name"    />
+        <result property="ip"    column="ip"    />
+        <result property="hostName"    column="host_name"    />
+        <result property="cpuNums"    column="cpu_nums"    />
+        <result property="cpuUtil"    column="cpu_util"    />
+        <result property="memTotal"    column="mem_total"    />
+        <result property="memUtil"    column="mem_util"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="id"    column="id"    />
+    </resultMap>
+
+    <sql id="selectVgHostCapacityVo">
+        select group_name, ip, host_name, cpu_nums, cpu_util, mem_total, mem_util, update_time, id from vg_host_capacity
+    </sql>
+
+    <select id="selectVgHostCapacityList" parameterType="VgHostCapacity" resultMap="VgHostCapacityResult">
+        <include refid="selectVgHostCapacityVo"/>
+        <where>  
+            <if test="groupName != null  and groupName != ''"> and group_name like concat('%', #{groupName}, '%')</if>
+            <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
+            <if test="hostName != null  and hostName != ''"> and host_name like concat('%', #{hostName}, '%')</if>
+            <if test="cpuNums != null "> and cpu_nums = #{cpuNums}</if>
+            <if test="cpuUtil != null "> and cpu_util = #{cpuUtil}</if>
+            <if test="memTotal != null  and memTotal != ''"> and mem_total = #{memTotal}</if>
+            <if test="memUtil != null "> and mem_util = #{memUtil}</if>
+        </where>
+    </select>
+    
+    <select id="selectVgHostCapacityById" parameterType="String" resultMap="VgHostCapacityResult">
+        <include refid="selectVgHostCapacityVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertVgHostCapacity" parameterType="VgHostCapacity">
+        insert into vg_host_capacity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupName != null">group_name,</if>
+            <if test="ip != null">ip,</if>
+            <if test="hostName != null">host_name,</if>
+            <if test="cpuNums != null">cpu_nums,</if>
+            <if test="cpuUtil != null">cpu_util,</if>
+            <if test="memTotal != null">mem_total,</if>
+            <if test="memUtil != null">mem_util,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="id != null">id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupName != null">#{groupName},</if>
+            <if test="ip != null">#{ip},</if>
+            <if test="hostName != null">#{hostName},</if>
+            <if test="cpuNums != null">#{cpuNums},</if>
+            <if test="cpuUtil != null">#{cpuUtil},</if>
+            <if test="memTotal != null">#{memTotal},</if>
+            <if test="memUtil != null">#{memUtil},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="id != null">#{id},</if>
+         </trim>
+    </insert>
+
+    <update id="updateVgHostCapacity" parameterType="VgHostCapacity">
+        update vg_host_capacity
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="groupName != null">group_name = #{groupName},</if>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="hostName != null">host_name = #{hostName},</if>
+            <if test="cpuNums != null">cpu_nums = #{cpuNums},</if>
+            <if test="cpuUtil != null">cpu_util = #{cpuUtil},</if>
+            <if test="memTotal != null">mem_total = #{memTotal},</if>
+            <if test="memUtil != null">mem_util = #{memUtil},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteVgHostCapacityById" parameterType="String">
+        delete from vg_host_capacity where id = #{id}
+    </delete>
+
+    <delete id="deleteVgHostCapacityByIds" parameterType="String">
+        delete from vg_host_capacity where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

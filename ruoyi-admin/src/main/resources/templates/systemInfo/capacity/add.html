@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增主机容量')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-capacity-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">主机组：</label>
+                <div class="col-sm-8">
+                    <input name="groupName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">Ip地址：</label>
+                <div class="col-sm-8">
+                    <input name="ip" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">HostName：</label>
+                <div class="col-sm-8">
+                    <input name="hostName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">CPU核心数：</label>
+                <div class="col-sm-8">
+                    <input name="cpuNums" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">cpu利用率：</label>
+                <div class="col-sm-8">
+                    <input name="cpuUtil" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">内存容量：</label>
+                <div class="col-sm-8">
+                    <input name="memTotal" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">内存使用率：</label>
+                <div class="col-sm-8">
+                    <input name="memUtil" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "systemInfo/capacity"
+        $("#form-capacity-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-capacity-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>
